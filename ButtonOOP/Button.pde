@@ -41,6 +41,7 @@ void show() {
   
   if(mouseReleased && mouseX > x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY < y+h/2){
     clicked = true;
+    backgroundColor = highlight;
   } else {
     clicked = false;
   }
