@@ -2,7 +2,7 @@ class Button {
   int x, y, w, h;
   boolean clicked;
   color highlight, normal;
-  String text;
+  String text = "";
 
 
 
@@ -17,6 +17,17 @@ class Button {
     normal = norm;
     clicked = false;
   }
+  
+  Button(int _x, int _y, int _w, int _h, PImage _i){
+    x = _x;
+    y = _y;
+    w = _w;
+    h = _h;
+    i = _i;
+    clicked = false;
+  }
+    
+  
   
 void show() {
   rectMode(CENTER);
@@ -45,7 +56,9 @@ void show() {
   } else {
     clicked = false;
   }
-
+  imageMode(CENTER);
+  
+  image(i,400,650,400,200);
 }
 
 }
