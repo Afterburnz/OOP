@@ -17,18 +17,29 @@ boolean wasPressed;
 color backgroundColor;
 
 PImage i;
-
+PImage[] gif;
+int numberOfFrames = 90;
+int f;
 void setup() {
   size(800, 800);
   i = loadImage("Image.jpg");
 
-  myButtons=new Button[4];
+  gif = new PImage[numberOfFrames];
+
+  int t = 0;
+  while (t < numberOfFrames) {
+    gif[t] = loadImage("frame_"+t+"_delay-0.04s.gif");
+    t = t+1;
+  }
+
+  myButtons=new Button[5];
 
 
-  myButtons[0] = new Button("purple", 600, 275, 300, 350, pink, purple);
+  myButtons[0] = new Button("purple", 600, 150, 300, 200, pink, purple);
   myButtons[1] = new Button("red", 200, 150, 300, 200, red, blue);
   myButtons[2] = new Button("green", 200, 400, 300, 200, green, yellow);
-  myButtons[3] = new Button(400, 650, 400, 200, i);
+  myButtons[3] = new Button(200, 650, 300, 200, i);
+  myButtons[4] = new Button(600, 400, 300, 200, gif);
 }
 
 
@@ -43,6 +54,7 @@ void draw() {
   myButtons[1].show();
   myButtons[2].show();
   myButtons[3].show();
+  myButtons[4].show();
 
   click();
 }
