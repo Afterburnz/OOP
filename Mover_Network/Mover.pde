@@ -1,53 +1,65 @@
 class Mover {
-  float x, y;
-  float vx, vy;
+  PVector location;
+  PVector velocity;
   float d;
-
+  boolean alive;
   Mover() {
     d=100;
-    x= random(0, width);
-    y= random(0, height);
-    vx = random(-1, 1);
-    vy = random(-1, 1);
+    location = new PVector (random(0, width), random(0, height));
+    velocity = new PVector (1, 0);
+    velocity.setMag(random(1, 5));
+    velocity.rotate(radians(random(0, 360)));
+    alive = true;
   }
-
+  Mover(float x, float y) {
+    d = 100;
+    location = new PVector (x,y);
+    velocity = new PVector (1, 0);
+    velocity.setMag(random(1, 5));
+    velocity.rotate(radians(random(0, 360)));
+    alive = true;
+  }
 
   void act() {
     move();
     bounceOffEdge();
+    checkForDeletion();
   }
 
-
+  void checkForDeletion(){
+    if (dist(location.x,location.y,mouseX,mouseY) < d/2 && mousePressed){
+      alive = false;
+    }
+  }
 
   void move() {
-    x = x +vx;
-    y = y+vy;
+    location.add(velocity);
   }
 
   void bounceOffEdge() {
-    if (x<0 || x > width) vx = -vx;
-    if (y<0 || y > height) vy = -vy;
+    if (location.x<0 || location.x > width) velocity.x = -velocity.x;
+    if (location.y<0 || location.y > height) velocity.y = -velocity.y;
   }
-  
-  
-  
+
+
+
   void showBody() {
     noStroke();
-    fill(255,50);
-    circle(x,y,d);
-  
+    fill(255, 50);
+    circle(location.x, location.y, d);
   }
-  
-  
-  void showConnections(){
+
+
+  void showConnections() {
     int i = 0;
-    while(i < n){
-      float dist = dist(x,y,myMovers[i].x,myMovers[i].y);
-      if (dist <=200){
-        float a = map(dist,0,200,255,0);
-        stroke(255,a);
+    while (i < myMovers.size()) {
+      Mover other = myMovers.get(i);
+      float dist = dist(location.x, location.y, other.location.x, other.location.y);
+      if (dist <=200) {
+        float a = map(dist, 0, 200, 255, 0);
+        stroke(255, a);
         strokeWeight(2);
-        line(x,y,myMovers[i].x, myMovers[i].y);
+        line(location.x, location.y, other.location.x, other.location.y);
       }
       i++;
     }
